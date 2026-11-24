@@ -1,17 +1,16 @@
 package com.example.track_expense.controller;
 
+import com.example.track_expense.exceptions.UserDoesNotExists;
+import com.example.track_expense.exceptions.WrongTimePeriodException;
 import com.example.track_expense.dto.SaveTransaction;
 import com.example.track_expense.dto.TransactionResponse;
 import com.example.track_expense.dto.TransactionResponseWithCount;
 import com.example.track_expense.enums.TransactionType;
-import com.example.track_expense.models.Transaction;
 import com.example.track_expense.services.TransactionService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -32,6 +31,18 @@ public class TransactionController {
     public TransactionResponse save(@RequestBody SaveTransaction transaction){
         return transactionService.saveTransaction(transaction);
     }
+    @GetMapping("/{userId}/transactions")
+    public TransactionResponseWithCount findAll(@PathVariable Long userId){
+        return transactionService.fetchAllTransactions(userId);
+    }
+    /// FETCH TRANSACTIONS IN A TIME PERIOD. CAN BE USED FOR FETCHING MONTHLY TRANSACTION.
+    @GetMapping("/{userId}/transactions-in-period")
+    public TransactionResponseWithCount findAllForTimePeriod(@PathVariable Long userId,
+                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) throws WrongTimePeriodException, UserDoesNotExists {
+        return transactionService.findAllByTimePeriod(userId,start,end);
+    }
+
 
 
 }

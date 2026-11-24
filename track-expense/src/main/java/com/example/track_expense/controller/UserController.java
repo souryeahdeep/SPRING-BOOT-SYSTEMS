@@ -28,16 +28,5 @@ public class UserController {
     public List<UserResponse> findAll(){
         return userService.findAllUsers();
     }
-    @GetMapping("/{userId}/transactions")
-    public TransactionResponseWithCount findAll(@PathVariable Long userId){
-        return userService.fetchAllTransactions(userId);
-    }
-    /// FETCH TRANSACTIONS IN A TIME PERIOD. CAN BE USED FOR FETCHING MONTHLY TRANSACTION.
-    @GetMapping("/{userId}/transactions-in-period")
-    public TransactionResponseWithCount findAllForTimePeriod(@PathVariable Long userId,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end){
-        return userService.findAllByTimePeriod(userId,start,end);
-    }
 
 }

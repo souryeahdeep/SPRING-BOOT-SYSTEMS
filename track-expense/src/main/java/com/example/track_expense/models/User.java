@@ -17,9 +17,13 @@ public class User {
     @Column
     String name;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST
+    )
     @JsonIgnore
-    List<Transaction> transactions=new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     public List<Transaction> getTransactions() {
         return transactions;

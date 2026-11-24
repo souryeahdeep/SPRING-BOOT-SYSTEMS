@@ -37,3 +37,5 @@
 4. **POST** /api/transaction [SAVE THE TRANSACTION] <br>
     `{"amount":1200,"transactionType":DEBIT,"userId":1} => req`
    `{"id":1,"amount":120,"transactionType":DEBIT,"timestamp":2026-11-10T12:00:12} => res`
+
+5. GET /api/user
